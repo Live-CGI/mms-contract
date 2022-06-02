@@ -19,6 +19,12 @@ contract ERC1155Token is ERC1155PresetMinterPauser, ERC1155Supply {
         return string(abi.encodePacked(_baseUri, _id.toString()));
     }
 
+    function setURI(string memory newuri) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "ERC1155Token: must have admin role");
+        _setURI(newuri);
+        _baseUri = newuri;
+    }
+
     function supportsInterface(bytes4 interfaceId)
         public
         view

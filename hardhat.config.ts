@@ -67,6 +67,11 @@ module.exports = {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMY_KEY}`,
       accounts: [PRIVATE_KEY_TESTNET],
     },
+    skaleTestnet: {
+      url: `https://staging-v2.skalenodes.com/v1/attractive-merope`,
+      accounts: [PRIVATE_KEY_TESTNET],
+      // gasPrice: 0,
+    },
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,

@@ -11,7 +11,7 @@ async function main() {
   )) as any as ERC1155Token__factory;
 
   const ERC1155Token = await ERC1155TokenFactory.deploy(
-    "ipfs://bafybeiam24ejn7s4kmaeyrx7q366y5mkjdwrdobiocopd5yhklba74icky/"
+    "https://bafybeif6iuokmmcuwj7jgscybx3gvlcwkb6ybspwcduivl7mbqmgmmxubi.ipfs.dweb.link/metadata/"
   );
   await ERC1155Token.deployed();
 
@@ -24,7 +24,7 @@ async function main() {
     await run("verify:verify", {
       address: ERC1155Token.address,
       constructorArguments: [
-        "ipfs://bafybeiam24ejn7s4kmaeyrx7q366y5mkjdwrdobiocopd5yhklba74icky/",
+        "https://bafybeif6iuokmmcuwj7jgscybx3gvlcwkb6ybspwcduivl7mbqmgmmxubi.ipfs.dweb.link/metadata/",
       ],
     });
     console.log("ERC1155 deployed and verified to:", ERC1155Token.address);
