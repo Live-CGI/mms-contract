@@ -19,19 +19,17 @@ contract ERC1155TokenSKALE is ERC1155PresetMinterPauser, ERC1155Supply {
 
     string internal _baseUri;
     MessageProxy public messageProxy;
-    address public targetContract;
     bytes32 public targetChainHash;
+    address public targetContract;
 
     constructor(
         string memory uri_,
         address _messageProxy,
-        address _targetContract,
         bytes32 _targetChainHash
     ) ERC1155PresetMinterPauser(uri_) {
         _baseUri = uri_;
         messageProxy = MessageProxy(_messageProxy);
         targetChainHash = _targetChainHash;
-        targetContract = _targetContract;
     }
 
     function uri(uint256 _id)
@@ -59,6 +57,22 @@ contract ERC1155TokenSKALE is ERC1155PresetMinterPauser, ERC1155Supply {
             "ERC1155Token: must have admin role"
         );
         messageProxy = MessageProxy(_messageProxy);
+    }
+
+    function setTargetChainHash(bytes32 _targetChainHash) external {
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "ERC1155Token: must have admin role"
+        );
+        targetChainHash = _targetChainHash;
+    }
+
+    function setTargetContract(address _targetContract) external {
+        require(
+            hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
+            "ERC1155Token: must have admin role"
+        );
+        targetContract = _targetContract;
     }
 
     function bridgeToETH(

@@ -55,6 +55,8 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setMessageProxy(address)": FunctionFragment;
+    "setTargetChainHash(bytes32)": FunctionFragment;
+    "setTargetContract(address)": FunctionFragment;
     "setURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "targetChainHash()": FunctionFragment;
@@ -93,6 +95,8 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
       | "safeTransferFrom"
       | "setApprovalForAll"
       | "setMessageProxy"
+      | "setTargetChainHash"
+      | "setTargetContract"
       | "setURI"
       | "supportsInterface"
       | "targetChainHash"
@@ -204,6 +208,14 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
     functionFragment: "setMessageProxy",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setTargetChainHash",
+    values: [BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTargetContract",
+    values: [string]
+  ): string;
   encodeFunctionData(functionFragment: "setURI", values: [string]): string;
   encodeFunctionData(
     functionFragment: "supportsInterface",
@@ -297,6 +309,14 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "setMessageProxy",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTargetChainHash",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTargetContract",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setURI", data: BytesLike): Result;
@@ -614,6 +634,16 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setTargetChainHash(
+      _targetChainHash: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setTargetContract(
+      _targetContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setURI(
       newuri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -786,6 +816,16 @@ export interface ERC1155TokenETH extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setTargetChainHash(
+    _targetChainHash: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setTargetContract(
+    _targetContract: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setURI(
     newuri: string,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -950,6 +990,16 @@ export interface ERC1155TokenETH extends BaseContract {
 
     setMessageProxy(
       _messageProxy: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTargetChainHash(
+      _targetChainHash: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTargetContract(
+      _targetContract: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1212,6 +1262,16 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setTargetChainHash(
+      _targetChainHash: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setTargetContract(
+      _targetContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setURI(
       newuri: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1390,6 +1450,16 @@ export interface ERC1155TokenETH extends BaseContract {
 
     setMessageProxy(
       _messageProxy: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTargetChainHash(
+      _targetChainHash: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTargetContract(
+      _targetContract: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

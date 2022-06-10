@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
-// import "@nomiclabs/hardhat-truffle5";
 import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-web3";
@@ -75,5 +74,19 @@ module.exports = {
   },
   etherscan: {
     apiKey: ETHERSCAN_API_KEY,
+    customChains: [
+      {
+        network: "skaleTestnet",
+        chainId: 1211818568165862,
+        urls: {
+          apiURL:
+            "https://attractive-merope.explorer.staging-v2.skalenodes.com/api",
+          browserURL:
+            "https://attractive-merope.explorer.staging-v2.skalenodes.com/",
+        },
+      },
+    ],
   },
 };
+
+// hh verify --network skaleTestnet 0x64c2EfCF94129656F1C859E92120252844162513 "https://bafybeif6iuokmmcuwj7jgscybx3gvlcwkb6ybspwcduivl7mbqmgmmxubi.ipfs.dweb.link/metadata/" "0xd2AAa00100000000000000000000000000000000" "0x0000000000000000000000000000000000000000000000000000000000000004
