@@ -5,6 +5,7 @@ pragma solidity 0.8.7;
 import "@openzeppelin/contracts/token/ERC1155/presets/ERC1155PresetMinterPauser.sol";
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 
 interface MessageProxy {
     function postOutgoingMessage(
@@ -14,7 +15,7 @@ interface MessageProxy {
     ) external;
 }
 
-contract ERC1155TokenETH is ERC1155PresetMinterPauser, ERC1155Supply {
+contract LiveCGIToken is ERC1155PresetMinterPauser, ERC1155Supply, ERC1155Holder {
     using Strings for uint256;
 
     string internal _baseUri;
@@ -75,18 +76,18 @@ contract ERC1155TokenETH is ERC1155PresetMinterPauser, ERC1155Supply {
         targetContract = _targetContract;
     }
 
-    function bridgeToSKALE(
+    function bridge(
         address from,
         address to,
         uint256 id,
         uint256 amount,
         bytes memory data
     ) external {
-        require(
+        // safeTransferFrom(from, address(this), id, amount, data);
+         require(
             from == _msgSender() || isApprovedForAll(from, _msgSender()),
             "ERC1155: caller is not owner nor approved"
         );
-
         _burn(from, id, amount);
 
         bytes memory bridgedData = abi.encode(to, id, amount, data);
@@ -124,7 +125,7 @@ contract ERC1155TokenETH is ERC1155PresetMinterPauser, ERC1155Supply {
         public
         view
         virtual
-        override(ERC1155, ERC1155PresetMinterPauser)
+        override(ERC1155, ERC1155PresetMinterPauser, ERC1155Receiver)
         returns (bool)
     {
         return super.supportsInterface(interfaceId);

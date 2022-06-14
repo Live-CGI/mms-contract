@@ -65,6 +65,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC1155PresetMinterPauser__factory>;
     getContractFactory(
+      name: "ERC1155Holder",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Holder__factory>;
+    getContractFactory(
+      name: "ERC1155Receiver",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ERC1155Receiver__factory>;
+    getContractFactory(
       name: "ERC165",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.ERC165__factory>;
@@ -73,21 +81,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC165__factory>;
     getContractFactory(
-      name: "ERC1155Token",
+      name: "LiveCGIToken",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155Token__factory>;
-    getContractFactory(
-      name: "ERC1155TokenETH",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155TokenETH__factory>;
-    getContractFactory(
-      name: "MessageProxy",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.MessageProxy__factory>;
-    getContractFactory(
-      name: "ERC1155TokenSKALE",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.ERC1155TokenSKALE__factory>;
+    ): Promise<Contracts.LiveCGIToken__factory>;
     getContractFactory(
       name: "MessageProxy",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -159,6 +155,16 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.ERC1155PresetMinterPauser>;
     getContractAt(
+      name: "ERC1155Holder",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Holder>;
+    getContractAt(
+      name: "ERC1155Receiver",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ERC1155Receiver>;
+    getContractAt(
       name: "ERC165",
       address: string,
       signer?: ethers.Signer
@@ -169,25 +175,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC165>;
     getContractAt(
-      name: "ERC1155Token",
+      name: "LiveCGIToken",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155Token>;
-    getContractAt(
-      name: "ERC1155TokenETH",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155TokenETH>;
-    getContractAt(
-      name: "MessageProxy",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.MessageProxy>;
-    getContractAt(
-      name: "ERC1155TokenSKALE",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.ERC1155TokenSKALE>;
+    ): Promise<Contracts.LiveCGIToken>;
     getContractAt(
       name: "MessageProxy",
       address: string,

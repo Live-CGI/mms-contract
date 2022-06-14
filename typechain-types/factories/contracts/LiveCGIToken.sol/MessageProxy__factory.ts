@@ -7,7 +7,7 @@ import type { Provider } from "@ethersproject/providers";
 import type {
   MessageProxy,
   MessageProxyInterface,
-} from "../../../contracts/ERC1155TokenETH.sol/MessageProxy";
+} from "../../../contracts/LiveCGIToken.sol/MessageProxy";
 
 const _abi = [
   {

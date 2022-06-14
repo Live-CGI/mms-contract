@@ -26,14 +26,14 @@ import type {
   OnEvent,
 } from "../../common";
 
-export interface ERC1155TokenETHInterface extends utils.Interface {
+export interface LiveCGITokenInterface extends utils.Interface {
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
     "PAUSER_ROLE()": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
-    "bridgeToSKALE(address,address,uint256,uint256,bytes)": FunctionFragment;
+    "bridge(address,address,uint256,uint256,bytes)": FunctionFragment;
     "burn(address,uint256,uint256)": FunctionFragment;
     "burnBatch(address,uint256[],uint256[])": FunctionFragment;
     "exists(uint256)": FunctionFragment;
@@ -46,6 +46,8 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
     "messageProxy()": FunctionFragment;
     "mint(address,uint256,uint256,bytes)": FunctionFragment;
     "mintBatch(address,uint256[],uint256[],bytes)": FunctionFragment;
+    "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
+    "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "postMessage(bytes32,address,bytes)": FunctionFragment;
@@ -73,7 +75,7 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
       | "PAUSER_ROLE"
       | "balanceOf"
       | "balanceOfBatch"
-      | "bridgeToSKALE"
+      | "bridge"
       | "burn"
       | "burnBatch"
       | "exists"
@@ -86,6 +88,8 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
       | "messageProxy"
       | "mint"
       | "mintBatch"
+      | "onERC1155BatchReceived"
+      | "onERC1155Received"
       | "pause"
       | "paused"
       | "postMessage"
@@ -127,7 +131,7 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
     values: [string[], BigNumberish[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "bridgeToSKALE",
+    functionFragment: "bridge",
     values: [string, string, BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
@@ -177,6 +181,14 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "mintBatch",
     values: [string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "onERC1155BatchReceived",
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "onERC1155Received",
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
@@ -253,10 +265,7 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
     functionFragment: "balanceOfBatch",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "bridgeToSKALE",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "bridge", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burn", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "burnBatch", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "exists", data: BytesLike): Result;
@@ -284,6 +293,14 @@ export interface ERC1155TokenETHInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "mintBatch", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "onERC1155BatchReceived",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "onERC1155Received",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
@@ -461,12 +478,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface ERC1155TokenETH extends BaseContract {
+export interface LiveCGIToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ERC1155TokenETHInterface;
+  interface: LiveCGITokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -506,7 +523,7 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber[]]>;
 
-    bridgeToSKALE(
+    bridge(
       from: string,
       to: string,
       id: BigNumberish,
@@ -577,6 +594,24 @@ export interface ERC1155TokenETH extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    onERC1155BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    onERC1155Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -688,7 +723,7 @@ export interface ERC1155TokenETH extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber[]>;
 
-  bridgeToSKALE(
+  bridge(
     from: string,
     to: string,
     id: BigNumberish,
@@ -759,6 +794,24 @@ export interface ERC1155TokenETH extends BaseContract {
     ids: BigNumberish[],
     amounts: BigNumberish[],
     data: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  onERC1155BatchReceived(
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish[],
+    arg3: BigNumberish[],
+    arg4: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  onERC1155Received(
+    arg0: string,
+    arg1: string,
+    arg2: BigNumberish,
+    arg3: BigNumberish,
+    arg4: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -867,7 +920,7 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber[]>;
 
-    bridgeToSKALE(
+    bridge(
       from: string,
       to: string,
       id: BigNumberish,
@@ -940,6 +993,24 @@ export interface ERC1155TokenETH extends BaseContract {
       data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    onERC1155BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
+
+    onERC1155Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -1131,7 +1202,7 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    bridgeToSKALE(
+    bridge(
       from: string,
       to: string,
       id: BigNumberish,
@@ -1205,6 +1276,24 @@ export interface ERC1155TokenETH extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    onERC1155BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    onERC1155Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1319,7 +1408,7 @@ export interface ERC1155TokenETH extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    bridgeToSKALE(
+    bridge(
       from: string,
       to: string,
       id: BigNumberish,
@@ -1396,6 +1485,24 @@ export interface ERC1155TokenETH extends BaseContract {
       ids: BigNumberish[],
       amounts: BigNumberish[],
       data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    onERC1155BatchReceived(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish[],
+      arg3: BigNumberish[],
+      arg4: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    onERC1155Received(
+      arg0: string,
+      arg1: string,
+      arg2: BigNumberish,
+      arg3: BigNumberish,
+      arg4: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
