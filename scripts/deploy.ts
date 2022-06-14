@@ -25,7 +25,7 @@ async function main() {
   } else if (hre.network.name === "rinkeby") {
     constructorArguments.push(
       "0x656fb12abab353FB1875a4e3Dc4D70179CB85BA4",
-      ethers.utils.keccak256(ethers.utils.toUtf8Bytes("attractive-merope")),
+      ethers.utils.keccak256(ethers.utils.toUtf8Bytes("attractive-merope"))
     );
   }
 
