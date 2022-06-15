@@ -31,6 +31,7 @@ export interface LiveCGITokenInterface extends utils.Interface {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "MINTER_ROLE()": FunctionFragment;
     "PAUSER_ROLE()": FunctionFragment;
+    "addBlacklist(address)": FunctionFragment;
     "balanceOf(address,uint256)": FunctionFragment;
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "bridge(address,address,uint256,uint256,bytes)": FunctionFragment;
@@ -43,6 +44,7 @@ export interface LiveCGITokenInterface extends utils.Interface {
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "isBlacklisted(address)": FunctionFragment;
     "messageProxy()": FunctionFragment;
     "mint(address,uint256,uint256,bytes)": FunctionFragment;
     "mintBatch(address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -51,14 +53,20 @@ export interface LiveCGITokenInterface extends utils.Interface {
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "postMessage(bytes32,address,bytes)": FunctionFragment;
+    "removeBlacklist(address)": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
+    "resetTokenRoyalty(uint256)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
+    "royaltyInfo(uint256,uint256)": FunctionFragment;
+    "royaltyfeeNumerator()": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "setMessageProxy(address)": FunctionFragment;
+    "setRoyaltyfeeNumerator(uint96)": FunctionFragment;
     "setTargetChainHash(bytes32)": FunctionFragment;
     "setTargetContract(address)": FunctionFragment;
+    "setTokenRoyalty(uint256,address,uint96)": FunctionFragment;
     "setURI(string)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
     "targetChainHash()": FunctionFragment;
@@ -73,6 +81,7 @@ export interface LiveCGITokenInterface extends utils.Interface {
       | "DEFAULT_ADMIN_ROLE"
       | "MINTER_ROLE"
       | "PAUSER_ROLE"
+      | "addBlacklist"
       | "balanceOf"
       | "balanceOfBatch"
       | "bridge"
@@ -85,6 +94,7 @@ export interface LiveCGITokenInterface extends utils.Interface {
       | "grantRole"
       | "hasRole"
       | "isApprovedForAll"
+      | "isBlacklisted"
       | "messageProxy"
       | "mint"
       | "mintBatch"
@@ -93,14 +103,20 @@ export interface LiveCGITokenInterface extends utils.Interface {
       | "pause"
       | "paused"
       | "postMessage"
+      | "removeBlacklist"
       | "renounceRole"
+      | "resetTokenRoyalty"
       | "revokeRole"
+      | "royaltyInfo"
+      | "royaltyfeeNumerator"
       | "safeBatchTransferFrom"
       | "safeTransferFrom"
       | "setApprovalForAll"
       | "setMessageProxy"
+      | "setRoyaltyfeeNumerator"
       | "setTargetChainHash"
       | "setTargetContract"
+      | "setTokenRoyalty"
       | "setURI"
       | "supportsInterface"
       | "targetChainHash"
@@ -121,6 +137,10 @@ export interface LiveCGITokenInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "PAUSER_ROLE",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "addBlacklist",
+    values: [string]
   ): string;
   encodeFunctionData(
     functionFragment: "balanceOf",
@@ -171,6 +191,10 @@ export interface LiveCGITokenInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "isBlacklisted",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "messageProxy",
     values?: undefined
   ): string;
@@ -197,12 +221,28 @@ export interface LiveCGITokenInterface extends utils.Interface {
     values: [BytesLike, string, BytesLike]
   ): string;
   encodeFunctionData(
+    functionFragment: "removeBlacklist",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "renounceRole",
     values: [BytesLike, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "resetTokenRoyalty",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "revokeRole",
     values: [BytesLike, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "royaltyInfo",
+    values: [BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "royaltyfeeNumerator",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "safeBatchTransferFrom",
@@ -221,12 +261,20 @@ export interface LiveCGITokenInterface extends utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
+    functionFragment: "setRoyaltyfeeNumerator",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "setTargetChainHash",
     values: [BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setTargetContract",
     values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setTokenRoyalty",
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "setURI", values: [string]): string;
   encodeFunctionData(
@@ -260,6 +308,10 @@ export interface LiveCGITokenInterface extends utils.Interface {
     functionFragment: "PAUSER_ROLE",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "addBlacklist",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "balanceOfBatch",
@@ -288,6 +340,10 @@ export interface LiveCGITokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "isBlacklisted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "messageProxy",
     data: BytesLike
   ): Result;
@@ -308,10 +364,26 @@ export interface LiveCGITokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "removeBlacklist",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "renounceRole",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "resetTokenRoyalty",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "royaltyInfo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "royaltyfeeNumerator",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "safeBatchTransferFrom",
     data: BytesLike
@@ -329,11 +401,19 @@ export interface LiveCGITokenInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "setRoyaltyfeeNumerator",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "setTargetChainHash",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "setTargetContract",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setTokenRoyalty",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "setURI", data: BytesLike): Result;
@@ -511,6 +591,11 @@ export interface LiveCGIToken extends BaseContract {
 
     PAUSER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
+    addBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     balanceOf(
       account: string,
       id: BigNumberish,
@@ -579,6 +664,8 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
+    isBlacklisted(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+
     messageProxy(overrides?: CallOverrides): Promise<[string]>;
 
     mint(
@@ -628,9 +715,19 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    removeBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     renounceRole(
       role: BytesLike,
       account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    resetTokenRoyalty(
+      tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -639,6 +736,14 @@ export interface LiveCGIToken extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    royaltyInfo(
+      _tokenId: BigNumberish,
+      _salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber]>;
+
+    royaltyfeeNumerator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     safeBatchTransferFrom(
       from: string,
@@ -669,6 +774,11 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    setRoyaltyfeeNumerator(
+      _royaltyfeeNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     setTargetChainHash(
       _targetChainHash: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -676,6 +786,13 @@ export interface LiveCGIToken extends BaseContract {
 
     setTargetContract(
       _targetContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    setTokenRoyalty(
+      tokenId: BigNumberish,
+      receiver: string,
+      feeNumerator: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -710,6 +827,11 @@ export interface LiveCGIToken extends BaseContract {
   MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
   PAUSER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+  addBlacklist(
+    _user: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   balanceOf(
     account: string,
@@ -779,6 +901,8 @@ export interface LiveCGIToken extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  isBlacklisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+
   messageProxy(overrides?: CallOverrides): Promise<string>;
 
   mint(
@@ -828,9 +952,19 @@ export interface LiveCGIToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  removeBlacklist(
+    _user: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   renounceRole(
     role: BytesLike,
     account: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  resetTokenRoyalty(
+    tokenId: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -839,6 +973,14 @@ export interface LiveCGIToken extends BaseContract {
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  royaltyInfo(
+    _tokenId: BigNumberish,
+    _salePrice: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[string, BigNumber]>;
+
+  royaltyfeeNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
   safeBatchTransferFrom(
     from: string,
@@ -869,6 +1011,11 @@ export interface LiveCGIToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  setRoyaltyfeeNumerator(
+    _royaltyfeeNumerator: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   setTargetChainHash(
     _targetChainHash: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
@@ -876,6 +1023,13 @@ export interface LiveCGIToken extends BaseContract {
 
   setTargetContract(
     _targetContract: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  setTokenRoyalty(
+    tokenId: BigNumberish,
+    receiver: string,
+    feeNumerator: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -907,6 +1061,8 @@ export interface LiveCGIToken extends BaseContract {
     MINTER_ROLE(overrides?: CallOverrides): Promise<string>;
 
     PAUSER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    addBlacklist(_user: string, overrides?: CallOverrides): Promise<void>;
 
     balanceOf(
       account: string,
@@ -976,6 +1132,8 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    isBlacklisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+
     messageProxy(overrides?: CallOverrides): Promise<string>;
 
     mint(
@@ -1023,9 +1181,16 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
+    removeBlacklist(_user: string, overrides?: CallOverrides): Promise<void>;
+
     renounceRole(
       role: BytesLike,
       account: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    resetTokenRoyalty(
+      tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1034,6 +1199,14 @@ export interface LiveCGIToken extends BaseContract {
       account: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    royaltyInfo(
+      _tokenId: BigNumberish,
+      _salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[string, BigNumber]>;
+
+    royaltyfeeNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1064,6 +1237,11 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    setRoyaltyfeeNumerator(
+      _royaltyfeeNumerator: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     setTargetChainHash(
       _targetChainHash: BytesLike,
       overrides?: CallOverrides
@@ -1071,6 +1249,13 @@ export interface LiveCGIToken extends BaseContract {
 
     setTargetContract(
       _targetContract: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    setTokenRoyalty(
+      tokenId: BigNumberish,
+      receiver: string,
+      feeNumerator: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1190,6 +1375,11 @@ export interface LiveCGIToken extends BaseContract {
 
     PAUSER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
+    addBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     balanceOf(
       account: string,
       id: BigNumberish,
@@ -1261,6 +1451,8 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    isBlacklisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     messageProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
@@ -1310,9 +1502,19 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    removeBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     renounceRole(
       role: BytesLike,
       account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    resetTokenRoyalty(
+      tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1321,6 +1523,14 @@ export interface LiveCGIToken extends BaseContract {
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    royaltyInfo(
+      _tokenId: BigNumberish,
+      _salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    royaltyfeeNumerator(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
       from: string,
@@ -1351,6 +1561,11 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    setRoyaltyfeeNumerator(
+      _royaltyfeeNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     setTargetChainHash(
       _targetChainHash: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1358,6 +1573,13 @@ export interface LiveCGIToken extends BaseContract {
 
     setTargetContract(
       _targetContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    setTokenRoyalty(
+      tokenId: BigNumberish,
+      receiver: string,
+      feeNumerator: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1395,6 +1617,11 @@ export interface LiveCGIToken extends BaseContract {
     MINTER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     PAUSER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     balanceOf(
       account: string,
@@ -1470,6 +1697,11 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    isBlacklisted(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     messageProxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
@@ -1519,9 +1751,19 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    removeBlacklist(
+      _user: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     renounceRole(
       role: BytesLike,
       account: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    resetTokenRoyalty(
+      tokenId: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1529,6 +1771,16 @@ export interface LiveCGIToken extends BaseContract {
       role: BytesLike,
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    royaltyInfo(
+      _tokenId: BigNumberish,
+      _salePrice: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    royaltyfeeNumerator(
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
@@ -1560,6 +1812,11 @@ export interface LiveCGIToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    setRoyaltyfeeNumerator(
+      _royaltyfeeNumerator: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     setTargetChainHash(
       _targetChainHash: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -1567,6 +1824,13 @@ export interface LiveCGIToken extends BaseContract {
 
     setTargetContract(
       _targetContract: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    setTokenRoyalty(
+      tokenId: BigNumberish,
+      receiver: string,
+      feeNumerator: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
