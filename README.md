@@ -3,4 +3,5 @@
 
 ```javascript
 npm install
-npm test
+npx hardhat run scripts/deploy.ts --network skaleTestnet
+npx hardhat run scripts/deploy.ts --network rinkeby
