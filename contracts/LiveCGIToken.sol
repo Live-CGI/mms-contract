@@ -40,7 +40,7 @@ contract LiveCGIToken is
     ) ERC1155PresetMinterPauser(uri_) {
         require(
             _royaltyfeeNumerator <= _feeDenominator(),
-            "ERC2981: royalty fee will exceed salePrice"
+            "LiveCGIToken: royalty fee will exceed salePrice"
         );
 
         _baseUri = uri_;
@@ -52,8 +52,13 @@ contract LiveCGIToken is
     modifier onlyAdmin() {
         require(
             hasRole(DEFAULT_ADMIN_ROLE, _msgSender()),
-            "LiveCGIToken.onlyAdmin: must have admin role"
+            "LiveCGIToken: must have admin role"
         );
+        _;
+    }
+
+    modifier whenNotPaused() {
+        require(!paused(), "ERC1155Pausable: token transfer while paused");
         _;
     }
 
@@ -155,7 +160,7 @@ contract LiveCGIToken is
     {
         require(
             _royaltyfeeNumerator <= _feeDenominator(),
-            "LiveCGIToken.setRoyaltyfeeNumerator: royalty fee will exceed salePrice"
+            "LiveCGIToken: royalty fee will exceed salePrice"
         );
         royaltyfeeNumerator = _royaltyfeeNumerator;
     }
@@ -229,9 +234,12 @@ contract LiveCGIToken is
         uint256[] memory ids,
         uint256[] memory amounts,
         bytes memory data
-    ) internal virtual override(ERC1155PresetMinterPauser, ERC1155Supply) {
-        require(!paused(), "ERC1155Pausable: token transfer while paused");
-
+    )
+        internal
+        virtual
+        override(ERC1155PresetMinterPauser, ERC1155Supply)
+        whenNotPaused
+    {
         require(!isBlacklisted[from], "Sender is Blacklisted!");
         require(!isBlacklisted[to], "Receiver is Blacklisted!");
         require(!isBlacklisted[operator], "Operator is Blacklisted!");
